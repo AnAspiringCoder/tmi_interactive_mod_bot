@@ -38,7 +38,7 @@ function onMessageHandler (target, tags, msgString, self) {
   if(msg.commandName[0] === `!`)
   {
     // Special case command handlers:
-    if(Dice.IsDiceCommand(msg.commandName.replace(`!`, ``).toLowerCase()))
+    if(Dice.IsDiceCommand(msg.commandName))
     {
         Dice.HandleDiceCommand(msg);
     }

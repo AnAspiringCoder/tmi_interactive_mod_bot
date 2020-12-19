@@ -2,8 +2,9 @@ function D(sides) {
     return Math.floor(Math.random() * sides) + 1;
 }
 
-function IsDiceCommand(commandString)
+function IsDiceCommand(commandName)
 {
+    var commandString = commandName.replace(`!`, ``).toLowerCase();
     let re = /\d*d{1}-{0,}\d{1,}$/;
 
     return re.test(commandString);
