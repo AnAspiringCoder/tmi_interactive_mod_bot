@@ -8,7 +8,7 @@ const randomMessageTable =
     "There are not more than five musical notes, yet the combinations of these five give rise to more melodies than can ever be heard. - Sun Tzu",
     "Stand your ground men! Stand your ground! - The Princess Bride",
     "The most powerful weapon on earth is the human soul on fire. - Ferdinand Foch",
-    "Victory comes from finding opportunities in problems - Sun Tzu"
+    "Victory comes from finding opportunities in problems - Sun Tzu",
 ];
 function RandomMessage(msg)
 {
