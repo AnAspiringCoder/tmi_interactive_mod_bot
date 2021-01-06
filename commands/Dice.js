@@ -2,10 +2,10 @@ function D(sides) {
     return Math.floor(Math.random() * sides) + 1;
 }
 
-function IsDiceCommand(commandName)
+function IsDiceCommand(msg)
 {
-    var commandString = commandName.replace(`!`, ``).toLowerCase();
-    let re = /\d*d{1}-{0,}\d{1,}$/;
+    var commandString = msg.commandName.replace(`!`, ``).toLowerCase();
+    let re = /^-{0,}\d*d{1}-{0,}\d{1,}$/;
 
     return re.test(commandString);
 }
@@ -42,7 +42,11 @@ function HandleDiceCommand(msg)
     {
         msg.client.say(msg.target, `That dice geometry is too complex! Watch out, or you'll crash the chat bot, ` + msg.requestorName + `! (max sides allowed: ` + maxSides + `)`);
     }
-    else if(numSides < 1)
+    else if(numSides == 0)
+    {
+        msg.client.say(msg.target, msg.requestorName + ` rolled zero sided dice, and got... zero. Really, what else were you expecting for dice with no sides.`);
+    }
+    else if(numSides < 0)
     {
         msg.client.say(msg.target, `The negative sided dice is colapsing in upon itself, creating a spacial rift... This may be a problem, ` + msg.requestorName + `.`);
     }

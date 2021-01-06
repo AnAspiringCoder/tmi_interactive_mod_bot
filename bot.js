@@ -5,6 +5,9 @@ const Dice = require('./commands/Dice');
 const Lurk = require('./commands/Lurk');
 const Raid = require('./commands/Raid');
 const TotallyAMelon = require('./commands/TotallyAMelon');
+const sound = require('sound-play');
+const path = require('path');
+const marioCoinMp3 = path.join(__dirname, 'audio/SuperMarioCoin.mp3');
 
 // Create a client with our options
 const client = new tmi.client(config.opts);
@@ -34,11 +37,13 @@ function onMessageHandler (target, tags, msgString, self) {
   msg[`word`] = formattedMsgString.split(" ");
   msg[`commandName`] = msg.word[0];
 
+  sound.play(marioCoinMp3);
+
   // Check if this followed command format.
   if(msg.commandName[0] === `!`)
   {
     // Special case command handlers:
-    if(Dice.IsDiceCommand(msg.commandName))
+    if(Dice.IsDiceCommand(msg))
     {
         Dice.HandleDiceCommand(msg);
     }
@@ -68,6 +73,21 @@ function onMessageHandler (target, tags, msgString, self) {
                 else
                 {
                     TotallyAMelon.NotMeleon(msg);
+                }
+                break;
+
+            case `!ground`:
+                client.say(msg.target, `Check out the super talented streamer @groundeffected ! He's artistically amazing in everything he does! Give his stream a follow over at twitch.tv/groundeffected`);
+                break;
+
+            case `!dance`:
+                client.say(msg.target, `/me has no idea what's going on, but it starts dancing!`);
+                break;
+
+            case `!discord`:
+                if(msg.target === "#aspiringly")
+                {
+                    client.say(msg.target, `Sorry, there isn't a discord yet. Aspiringly hangs out in several different community discords though, so look around and you should find him.`);
                 }
                 break;
 
