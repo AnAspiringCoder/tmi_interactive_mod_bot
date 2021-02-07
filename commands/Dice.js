@@ -2,12 +2,12 @@ function D(sides) {
     return Math.floor(Math.random() * sides) + 1;
 }
 
-function IsDiceCommand(msg)
+function IsValidCommand(msg)
 {
-    var commandString = msg.commandName.replace(`!`, ``).toLowerCase();
+    var command = msg.command.replace(`!`, ``).toLowerCase();
     let re = /^-{0,}\d*d{1}-{0,}\d{1,}$/;
 
-    return re.test(commandString);
+    return re.test(command);
 }
 
 function HandleDiceCommand(msg)
@@ -15,7 +15,7 @@ function HandleDiceCommand(msg)
     var maxDice = 7;
     var maxSides = 101;
 
-    var command = msg.commandName.replace(`!`, ``);
+    var command = msg.command.replace(`!`, ``);
     var diceRoll = command.split('d');
     var numDice;
     var numSides = diceRoll[1];
@@ -91,7 +91,7 @@ function RollDice(numDice, numSides, msg)
 
 
 module.exports = {
+    ExecuteCommand: HandleDiceCommand,
     D: D,
-    IsDiceCommand: IsDiceCommand,
-    HandleDiceCommand: HandleDiceCommand
+    MatchesMsgCommand: IsValidCommand,
 };
