@@ -5,7 +5,7 @@ function ShoutOut(msg)
     {
         shoutOutMessage = `Sorry, ` + msg.requestorName + `, you didn't specify a valid target for that command.`;
 
-        console.log(`* Failed execution of ` + msg.commandName + ` command. No target specified.`);
+        console.log(`* Failed execution of ` + msg.command + ` command. No target specified.`);
     }
     else
     {
@@ -13,10 +13,18 @@ function ShoutOut(msg)
         shoutOutMessage = msg.requestorName + ` thinks you should go check out @` + shoutOutTarget + `'s channel. 
         Consider giving them a follow over at twitch.tv/` + shoutOutTarget;
 
-        console.log(`* Executed ` + msg.commandName + ` command`);
+        console.log(`* Executed ` + msg.command + ` command`);
     }
 
     msg.client.say(msg.target, shoutOutMessage);
 }
 
-module.exports = ShoutOut;
+function IsValidCommand(msg)
+{
+    return (msg.command === '!so')
+}
+
+module.exports = {
+    ExecuteCommand: ShoutOut,
+    MatchesMsgCommand: IsValidCommand
+}

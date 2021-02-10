@@ -10,6 +10,7 @@ const randomMessageTable =
     "The most powerful weapon on earth is the human soul on fire. - Ferdinand Foch",
     "Victory comes from finding opportunities in problems - Sun Tzu",
 ];
+
 function RandomMessage(msg)
 {
     var randomMessage = randomMessageTable[Dice.D(randomMessageTable.length) - 1];
@@ -32,7 +33,20 @@ function StandardMessage(msg)
     msg.client.say(msg.target, standardMessage);
 }
 
+function Raid(msg)
+{
+    RandomMessage(msg);
+    StandardMessage(msg);
+}
+
+function IsValidCommand(msg)
+{
+    return (msg.command === `!raid`);
+}
+
 module.exports = {
+    ExecuteCommand: Raid,
+    MatchesMsgCommand: IsValidCommand,
     RandomMessage: RandomMessage,
     StandardMessage: StandardMessage
 };
