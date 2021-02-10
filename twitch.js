@@ -57,7 +57,7 @@ function onMessageHandler (target, tags, msgString, self) {
     var validCommand = false;
     for (x in commands)
     {
-        console.log("Trying command" + x);
+        console.log("Trying command: " + x);
         try
         {
             if(commands[x].MatchesMsgCommand(msg))
@@ -77,7 +77,7 @@ function onMessageHandler (target, tags, msgString, self) {
 
     if(!validCommand)
     {
-        console.log(`* Unknown command ` + msg.command);
+        console.log(`* Unknown command: ` + msg.command);
     }
   }
 }
