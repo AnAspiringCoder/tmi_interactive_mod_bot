@@ -21,7 +21,6 @@ const commands = {
     UserSpecific: require('./commands/UserSpecific'),
 };
 
-
 function init()
 {
     // Register our event handlers (defined below)
@@ -36,7 +35,6 @@ function init()
 function onMessageHandler (target, tags, msgString, self) {
   if (self) { return; } // Ignore messages from the bot
 
-
   console.log(tags);
   console.log(target);
   // Create a structure that we can pass as a simplified argument
@@ -50,6 +48,7 @@ function onMessageHandler (target, tags, msgString, self) {
   msg[`word`] = formattedMsgString.split(" ");
   msg[`command`] = msg.word[0].toLowerCase();
 
+  if(msg.requestorName != config.opts.identity.username);
   sound.play(marioCoinMp3);
 
   // Check if this followed command format.
@@ -58,12 +57,21 @@ function onMessageHandler (target, tags, msgString, self) {
     var validCommand = false;
     for (x in commands)
     {
-        if(commands[x].MatchesMsgCommand(msg))
+        console.log("Trying command" + x);
+        try
         {
-            validCommand = true;
-            console.log('executing command: ' + x);
-            commands[x].ExecuteCommand(msg);
-            break;
+            if(commands[x].MatchesMsgCommand(msg))
+            {
+                validCommand = true;
+                console.log('executing command: ' + x);
+                commands[x].ExecuteCommand(msg);
+                break;
+            }
+        }
+        catch(err)
+        {
+            console.log("Error at: " + x);
+            console.log(err.message);
         }
     }
 

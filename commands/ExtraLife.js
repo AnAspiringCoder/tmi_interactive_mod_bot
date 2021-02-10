@@ -4,7 +4,7 @@ function ExtraLifeLink(msg)
     msg.client.say(msg.target, message);
 }
 
-const userCommands = [ 'extralife', 'el', 'charity', 'donate' ];
+const userCommands = [ '!extralife', '!el', '!charity', '!donate' ];
 
 function IsValidCommand(msg)
 {

@@ -17,6 +17,19 @@ const userCommands =
     { user: 'craftmeleon', command: '!notamelon', foo: NotAMelon }
 ];
 
+function UserCommands(msg)
+{
+    for(i = 0; i < userCommands.length; i++)
+    {
+        if(msg.command === userCommands[i].command)
+        {
+            var nameMatch = (msg.requestorName == userCommands[i].user);
+            userCommands[i].foo(msg, nameMatch);
+            break;
+        }
+    }
+}
+
 function IsValidCommand(msg)
 {
     var valid = false;
@@ -33,19 +46,7 @@ function IsValidCommand(msg)
     return valid;
 }
 
-function UserCommands(msg)
-{
-    for(i = 0; i < userCommands.length; i++)
-    {
-        if(msg.command === userCommands[i].command)
-        {
-            userCommands[i].foo(msg);
-            break;
-        }
-    }
-}
-
-exports = {
+module.exports = {
     ExecuteCommand: UserCommands,
     MatchesMsgCommand: IsValidCommand,
 }
