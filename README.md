@@ -1,5 +1,5 @@
 # tmi_interactive_mod_bot
-- An interactive mod bot built using the tmi twitch interface library
+- An interactive bot built to help mods with shout-outs and quick reference commands. Written using the tmi.js Twitch interface library.
 
 ## Based on the Twitch IRC bot tutorial
 - https://dev.twitch.tv/docs/irc 

@@ -42,4 +42,12 @@ function Lurk(msg)
     msg.client.say(msg.target, lurkMessage);
 }
 
-module.exports = Lurk;
+function IsValidCommand(msg)
+{
+    return (msg.command === '!lurk')
+}
+
+module.exports = {
+    ExecuteCommand: Lurk,
+    MatchesMsgCommand: IsValidCommand,
+}
