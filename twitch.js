@@ -18,6 +18,7 @@ const commands = {
     Raid: require('./commands/Raid'),
     ShoutOut: require('./commands/ShoutOut'),
     Socials: require('./commands/Socials'),
+    StrikeDice: require('./commands/StrikeDice'),
     UserSpecific: require('./commands/UserSpecific'),
 };
 
