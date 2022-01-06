@@ -27,7 +27,7 @@ function IsValidCommand(msg)
 
 function HandleDiceCommand(msg)
 {
-    var maxDice = 7;
+    var maxDice = 8;
 
     var command = msg.command.replace(`!`, ``);
     let re = /(\d{1}(r|b|w)){1}/g;
@@ -35,6 +35,9 @@ function HandleDiceCommand(msg)
     var redDice = 0;
     var whiteDice = 0;
     var blueDice = 0;
+    var redEntries = 0;
+    var blueEntries = 0;
+    var whiteEntries = 0;
     console.log(diceRolls);
     for(x in diceRolls)
     {
@@ -42,26 +45,49 @@ function HandleDiceCommand(msg)
         if(diceRolls[x][1] === 'r')
         {
             redDice = parseInt(diceRolls[x][0], 10);
+            redEntries++;
         }
         else if(diceRolls[x][1] === 'w')
         {
             whiteDice = parseInt(diceRolls[x][0], 10);
+            whiteEntries++;
         }
         else if(diceRolls[x][1] === 'b')
         {
             blueDice = parseInt(diceRolls[x][0], 10);
+            blueEntries++;
         }
     }
     console.log(redDice + 'red ' + blueDice + 'blue ' + whiteDice + `white`);
 
-    RollDice(redDice, blueDice, whiteDice, msg);
+    // Edge case handling
+    if((redDice > maxDice) ||
+    (blueDice > maxDice) || 
+    (whiteDice > maxDice))
+    {
+        var edgeCaseMessage = `Sry, you can't roll more than ` + maxDice + ` of any color`;
+        msg.client.say(msg.target, edgeCaseMessage);
+    }
+    else if((redEntries > 1) ||
+            (blueEntries > 1) ||
+            (whiteEntries > 1))
+    {
+        var edgeCaseMessage = `Sry, you specified a color of dice twice.`;
+        msg.client.say(msg.target, edgeCaseMessage);
+    }
+    else
+    {
+        RollDice(redDice, blueDice, whiteDice, msg);
+    }
+
 }
 
 function RollDice(redDice, blueDice, whiteDice, msg)
 {
-    var diceMessage = msg.requestorName + ` rolled: `;
+    var diceMessage = ``;
     var total = 0;
     
+    diceMessage += msg.requestorName + ` rolled: `;
     if(redDice > 0)
     {
         diceMessage +=  ` ` + redDice + ` reds: (`;
@@ -73,8 +99,7 @@ function RollDice(redDice, blueDice, whiteDice, msg)
             diceMessage += roll.toString() + ` `; 
         }
         diceMessage += `), `
-    }
-    console.log('\nred done');
+    } 
 
     if(blueDice > 0)
     {
@@ -87,8 +112,7 @@ function RollDice(redDice, blueDice, whiteDice, msg)
             diceMessage += roll.toString() + ` `; 
         }
         diceMessage += `)`
-    }
-    console.log('\nblue done');
+    } 
 
     if(whiteDice > 0)
     {
@@ -101,8 +125,7 @@ function RollDice(redDice, blueDice, whiteDice, msg)
             diceMessage += roll.toString() + ` `; 
         }
         diceMessage += `)`
-    }
-    console.log('\nwhite done');
+    } 
 
     diceMessage +=`, for a total of: ` + total;
     
