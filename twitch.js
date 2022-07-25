@@ -24,6 +24,8 @@ const commands = {
     UserSpecific: require('./commands/UserSpecific'),
 };
 
+let chatterList = {};
+
 function init()
 {
     // Register our event handlers (defined below)
@@ -101,9 +103,9 @@ function onMessageHandler (target, tags, msgString, self) {
 
   if(NotificationShouldBePlayed(msg))
   {
-    sound.play(marioCoinMp3);
+      sound.play(marioCoinMp3);
   }
-
+      
   // Check if this followed command format.
   if(msg.command[0] === `!`)
   {
@@ -133,7 +135,41 @@ function onMessageHandler (target, tags, msgString, self) {
         console.log(`* Unknown command: ` + msg.command);
     }
   }
-//   else if()
+  else if (NotificationShouldBePlayed(msg))
+  {
+    try
+    {
+        if(!chatterList.hasOwnProperty(msg.requestorName))
+        {
+            console.log('executing command: Welcome');
+            var command = formattedMsgString.toLowerCase();
+            let grievous = /(?:hello there)/;
+            let great = /(good)+ (day|morning|afternoon|evening)/;
+
+            if(grievous.test(command))
+            {
+                msg.client.say(msg.target, "Ahh, General " + msg.requestorName);
+            }
+            else if(great.test(command))
+            {
+                // Thanks @eternalwildfox
+                msg.client.say(msg.target, msg.requestorName + " It's not just good, it's GREAT!");
+            }
+            else
+            {
+                msg.client.say(msg.target, "Hey, " + msg.requestorName  + ", welcome to the stream!");
+            }
+            // Hello there > "Ah, General Kenobi"
+            // Good ~ > "Not just good, it's GREAT!"
+            chatterList[msg.requestorName] = true;
+        }
+    }
+    catch(err)
+    {
+        console.log("Error at: Welcome");
+        console.log(err.message);
+    }
+  }
 }
 
 function Wat(msg)

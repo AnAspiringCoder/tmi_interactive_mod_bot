@@ -23,7 +23,7 @@ function UserCommands(msg)
     {
         if(msg.command === userCommands[i].command)
         {
-            var nameMatch = (msg.requestorName == userCommands[i].user);
+            var nameMatch = (msg.requestorName == '@'+userCommands[i].user);
             userCommands[i].foo(msg, nameMatch);
             break;
         }
