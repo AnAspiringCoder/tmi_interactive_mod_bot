@@ -1,10 +1,12 @@
-function ExtraLifeLink(msg)
+// https://multistre.am/aspirepainting/jarrettsterrainminis/layout4/
+
+function Multi(msg)
 {
-    message = "Thank you for considering donating: https://www.extra-life.org/index.cfm?fuseaction=donorDrive.team&teamID=56676";
+    message = "https://multistre.am/aspirepainting/Ksauce01/layout4/";
     msg.client.say(msg.target, message);
 }
 
-const userCommands = [ '!extralife', '!el', '!charity', '!donate' ];
+const userCommands = [ '!multi', '!duo', '!multistream', '!mysteriousvoice', '!costream', '!whodis' ];
 
 function IsValidCommand(msg)
 {
@@ -22,6 +24,6 @@ function IsValidCommand(msg)
 
 module.exports = 
 {
-    ExecuteCommand: ExtraLifeLink,
+    ExecuteCommand: Multi,
     MatchesMsgCommand: IsValidCommand
 }
