@@ -21,6 +21,7 @@ const commands = {
     Rigged: require('./commands/Rigged'),
     ShoutOut: require('./commands/ShoutOut'),
     Socials: require('./commands/Socials'),
+    Ufo: require('./commands/UFO'),
     UserSpecific: require('./commands/UserSpecific'),
 };
 
@@ -142,25 +143,51 @@ function onMessageHandler (target, tags, msgString, self) {
         if(!chatterList.hasOwnProperty(msg.requestorName))
         {
             console.log('executing command: Welcome');
-            var command = formattedMsgString.toLowerCase();
-            let grievous = /(?:hello there)/;
-            let great = /(good)+ (day|morning|afternoon|evening)/;
 
-            if(grievous.test(command))
+            let username = 0;
+            let customMessage = 1;
+            let userSpecificWelcomes = [
+                [`@aspirepainting`, `I shouldn't be talking to you.`],
+                [`@traitor_legions`, `Traitor!!!`],
+                [`@itstehpope`, `You need to come up with a more appropriate greeting.`],
+                [`@craftmeleon`, `CRAFT!!!`],
+                [`@tamind01`, `Welcome in! Say "hi" to Lucky and Blaze for me!`],
+                [`@prof_ulysses`, `There will be no foolish wand-waving or silly incantations in this class. As such, I don’t expect many of you to appreciate the subtle science and exact art that is potion-making. However, for those select few… who possess, the predisposition… I can teach you how to bewitch the mind and ensnare the senses. I can tell you how to bottle fame, brew glory, and even put a stopper in death.`]
+            ];
+
+            let responseSent = false;
+            for (const element of userSpecificWelcomes)
             {
-                msg.client.say(msg.target, "Ahh, General " + msg.requestorName);
+                if(msg.requestorName === element[username])
+                {
+                    msg.client.say(msg.target, msg.requestorName + ' ' + element[customMessage]);
+                    responseSent = true;
+                    break;
+                }
             }
-            else if(great.test(command))
+
+            if(!responseSent)
             {
-                // Thanks @eternalwildfox
-                msg.client.say(msg.target, msg.requestorName + " It's not just good, it's GREAT!");
+                var command = formattedMsgString.toLowerCase();
+                let grievous = /(?:hello there)/;
+                let great = /(good)+ (day|morning|afternoon|evening)/;
+                
+                if(grievous.test(command))
+                {
+                    msg.client.say(msg.target, "Ahh, General " + msg.requestorName);
+                }
+                else if(great.test(command))
+                {
+                    // Thanks @eternalwildfox
+                    msg.client.say(msg.target, msg.requestorName + " It's not just good, it's GREAT!");
+                }
+                else
+                {
+                    msg.client.say(msg.target, "Hey, " + msg.requestorName  + ", welcome to the stream!");
+                }
             }
-            else
-            {
-                msg.client.say(msg.target, "Hey, " + msg.requestorName  + ", welcome to the stream!");
-            }
-            // Hello there > "Ah, General Kenobi"
-            // Good ~ > "Not just good, it's GREAT!"
+
+            // Update chat list so each user is only welcomed once.
             chatterList[msg.requestorName] = true;
         }
     }
